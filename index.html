@@ -26,23 +26,68 @@
   .view.active{display:block;animation:fadeIn .3s ease;}
   @keyframes fadeIn{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
 
-  .top-header{text-align:center;padding:14px 0 6px;}
-  .top-header .kicker{display:inline-block;background:var(--sun-pale);color:#8A4A12;font-weight:700;font-size:13px;padding:4px 14px;border-radius:999px;margin-bottom:10px;}
-  .top-header h1{font-size:24px;line-height:1.5;}
-  .top-header p{color:var(--ink-soft);font-size:14px;margin-top:8px;}
+  /* ---------- HOME ---------- */
+  .home-header{text-align:center;padding:16px 0 8px;}
+  .home-header .kicker{display:inline-block;background:var(--sun-pale);color:#8A4A12;font-weight:700;font-size:13px;padding:4px 14px;border-radius:999px;margin-bottom:10px;}
+  .home-header h1{font-size:26px;line-height:1.5;}
+  .home-header p{color:var(--ink-soft);font-size:14px;margin-top:8px;}
+  .ref-link{display:block;text-align:center;font-size:13px;color:var(--sea);font-weight:700;margin:6px 0 18px;background:none;border:none;cursor:pointer;text-decoration:underline;}
 
-  .group-label{font-family:"Zen Maru Gothic",sans-serif;font-weight:700;color:var(--sea-deep);font-size:14px;margin:22px 4px 10px;}
-  .card-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;}
-  @media (max-width:560px){.card-grid{grid-template-columns:1fr 1fr;}}
-  .photo-card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius-md);padding:10px;cursor:pointer;text-align:center;transition:transform .15s ease, box-shadow .15s ease;}
-  .photo-card:hover{transform:translateY(-2px);box-shadow:0 8px 18px rgba(31,92,121,.12);}
-  .photo-card canvas{width:100%;border-radius:10px;display:block;background:#fff;}
-  .photo-card .name{font-size:12px;font-weight:700;color:var(--ink);margin-top:8px;}
+  .stamp-row{display:flex;justify-content:center;gap:14px;margin:14px 0 22px;}
+  .stamp{width:48px;height:48px;border-radius:50%;border:3px solid var(--sea-pale);display:flex;align-items:center;justify-content:center;font-size:20px;color:var(--line);background:#fff;transition:all .25s ease;}
+  .stamp.done{border-color:var(--leaf);background:var(--leaf-pale);color:var(--leaf);}
+  .progress-text{text-align:center;font-size:14px;color:var(--ink-soft);margin-bottom:10px;}
+
+  .card-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  @media (max-width:520px){.card-grid{grid-template-columns:1fr;}}
+  .entry-card{position:relative;background:var(--card);border:1px solid var(--line);border-radius:var(--radius-lg);padding:22px 18px;text-align:left;cursor:pointer;transition:transform .15s ease, box-shadow .15s ease;display:flex;flex-direction:column;gap:10px;}
+  .entry-card:hover{transform:translateY(-3px);box-shadow:0 10px 24px rgba(31,92,121,0.12);}
+  .entry-card .icon-badge{width:48px;height:48px;border-radius:16px;display:flex;align-items:center;justify-content:center;}
+  .entry-card h2{font-size:16px;color:var(--ink);}
+  .entry-card p{font-size:13px;color:var(--ink-soft);margin:0;line-height:1.6;}
+  .entry-card .done-badge{position:absolute;top:16px;right:16px;background:var(--leaf);color:#fff;font-size:12px;font-weight:700;padding:3px 10px;border-radius:999px;}
 
   .section-top{display:flex;align-items:center;gap:12px;margin-bottom:18px;}
   .back-btn{background:#fff;border:1px solid var(--line);border-radius:12px;width:40px;height:40px;font-size:18px;color:var(--sea-deep);cursor:pointer;flex-shrink:0;}
   .back-btn:hover{background:var(--sea-pale2);}
   .section-top h2{font-size:19px;}
+
+  /* ---------- reference compare ---------- */
+  .compare-row{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:10px;}
+  .compare-col{flex:1;min-width:180px;max-width:260px;}
+  .compare-col canvas{width:100%;border-radius:12px;border:1px solid var(--line);}
+  .compare-col .cap{text-align:center;font-size:13px;font-weight:700;color:var(--ink-soft);margin-top:6px;}
+  .ref-card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius-lg);padding:20px;}
+  .ref-card .hint{font-size:13px;color:var(--ink-soft);margin-top:14px;line-height:1.7;text-align:center;}
+
+  /* ---------- WORKSHEET ---------- */
+  .worksheet-card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius-lg);padding:22px;}
+  .ws-item{margin-bottom:20px;}
+  .ws-item:last-child{margin-bottom:0;}
+  .ws-item label{display:block;font-weight:700;font-size:15px;color:var(--sea-deep);margin-bottom:6px;}
+  .ws-item .ws-hint{font-size:12px;color:var(--ink-soft);margin-bottom:8px;line-height:1.6;background:var(--sea-pale2);padding:8px 12px;border-radius:10px;}
+  .ws-item textarea{width:100%;min-height:70px;border-radius:var(--radius-md);border:1px solid var(--line);padding:12px;font-family:"Zen Kaku Gothic New",sans-serif;font-size:14px;line-height:1.7;color:var(--ink);resize:vertical;background:#fff;}
+  .ws-item textarea:focus{outline:2px solid var(--sea);outline-offset:1px;}
+  .ws-pair{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+  .ws-pair3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;}
+  @media (max-width:560px){.ws-pair,.ws-pair3{grid-template-columns:1fr;}}
+  .ws-sub{font-size:12px;font-weight:700;color:var(--ink-soft);margin-bottom:4px;}
+  .save-row{display:flex;align-items:center;gap:14px;margin-top:18px;}
+  .save-btn{padding:13px 26px;border-radius:var(--radius-md);border:none;background:var(--sea);color:#fff;font-family:"Zen Maru Gothic",sans-serif;font-weight:700;font-size:15px;cursor:pointer;}
+  .save-btn:hover{background:var(--sea-deep);}
+  .save-msg{font-size:13px;color:var(--leaf);font-weight:700;opacity:0;transition:opacity .3s ease;}
+  .save-msg.show{opacity:1;}
+  .error-msg{font-size:13px;color:var(--coral);margin-top:8px;display:none;}
+  .error-msg.show{display:block;}
+
+  /* ---------- EDIT TOOL (prefixed edit-) ---------- */
+  .group-label{font-family:"Zen Maru Gothic",sans-serif;font-weight:700;color:var(--sea-deep);font-size:14px;margin:18px 4px 10px;}
+  .photo-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;}
+  @media (max-width:560px){.photo-grid{grid-template-columns:1fr 1fr;}}
+  .photo-card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius-md);padding:10px;cursor:pointer;text-align:center;transition:transform .15s ease, box-shadow .15s ease;}
+  .photo-card:hover{transform:translateY(-2px);box-shadow:0 8px 18px rgba(31,92,121,.12);}
+  .photo-card canvas{width:100%;border-radius:10px;display:block;background:#fff;}
+  .photo-card .name{font-size:12px;font-weight:700;color:var(--ink);margin-top:8px;}
 
   .step-progress{display:flex;gap:6px;margin-bottom:18px;}
   .step-progress .dot{flex:1;height:6px;border-radius:999px;background:var(--line);}
@@ -83,59 +128,227 @@
   .btn-ghost:hover{background:var(--sea-pale2);}
   .btn-sun{background:var(--sun);color:#fff;}
   .btn-sun:hover{background:#D97F36;}
-
-  .compare-row{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:10px;}
-  .compare-col{flex:1;min-width:180px;max-width:260px;}
-  .compare-col canvas{width:100%;border-radius:12px;border:1px solid var(--line);}
-  .compare-col .cap{text-align:center;font-size:13px;font-weight:700;color:var(--ink-soft);margin-top:6px;}
-  .hint{font-size:13px;color:var(--ink-soft);margin-top:14px;line-height:1.7;}
 </style>
 </head>
 <body>
 <div class="wrap">
 
-  <!-- ============ HOME: choose category ============ -->
-  <section id="view-select" class="view active">
-    <div class="top-header">
+  <!-- ============ OUTER HOME ============ -->
+  <section id="view-home" class="view active">
+    <div class="home-header">
       <span class="kicker">6年生 情報の学習</span>
       <h1>写真をくふうしてポスターをつくろう</h1>
-      <p>切り抜き・明るさ・文字入れで、伝わり方を変えてみよう</p>
+      <p>4つのミッションに挑戦して、スタンプを集めよう</p>
     </div>
+    <button class="ref-link" data-goto="view-reference">見本(加工前・加工後)を見る</button>
 
-    <div class="group-label">運動部</div>
-    <div class="card-grid" id="grid-sports"></div>
+    <div class="stamp-row" id="stamp-row"></div>
+    <p class="progress-text" id="progress-text"></p>
 
-    <div class="group-label">文化部</div>
-    <div class="card-grid" id="grid-culture"></div>
+    <div class="card-grid">
+      <button class="entry-card" data-goto="view-ws1">
+        <span class="done-badge" id="badge-ws1" style="display:none;">クリア</span>
+        <span class="icon-badge" style="background:var(--sea-pale);">
+          <svg width="26" height="26" viewBox="0 0 28 28"><rect x="5" y="4" width="18" height="20" rx="2.5" fill="none" stroke="#1F5C79" stroke-width="2.2"/><line x1="9" y1="10" x2="19" y2="10" stroke="#1F5C79" stroke-width="2"/><line x1="9" y1="15" x2="19" y2="15" stroke="#1F5C79" stroke-width="2"/><line x1="9" y1="20" x2="15" y2="20" stroke="#1F5C79" stroke-width="2"/></svg>
+        </span>
+        <h2>1. ちがいを見つけよう</h2>
+        <p>見本を見くらべて、気づいたことを書こう</p>
+      </button>
 
-    <div class="group-label">小学校の活動</div>
-    <div class="card-grid" id="grid-elementary"></div>
+      <button class="entry-card" data-goto="edit-select">
+        <span class="done-badge" id="badge-edit" style="display:none;">クリア</span>
+        <span class="icon-badge" style="background:var(--coral-pale);">
+          <svg width="26" height="26" viewBox="0 0 28 28"><rect x="4" y="7" width="20" height="15" rx="2.5" fill="none" stroke="#D85A30" stroke-width="2.2"/><circle cx="14" cy="14.5" r="4.5" fill="none" stroke="#D85A30" stroke-width="2.2"/><rect x="10" y="4" width="8" height="4" rx="1" fill="none" stroke="#D85A30" stroke-width="2"/></svg>
+        </span>
+        <h2>2. 写真を加工しよう</h2>
+        <p>切り抜き・明るさ・文字入れでポスターをつくろう</p>
+      </button>
+
+      <button class="entry-card" data-goto="view-ws2">
+        <span class="done-badge" id="badge-ws2" style="display:none;">クリア</span>
+        <span class="icon-badge" style="background:var(--leaf-pale);">
+          <svg width="26" height="26" viewBox="0 0 28 28"><path d="M6 22 L7 17.5 L18.5 6 C19.5 5 21 5 22 6 C23 7 23 8.5 22 9.5 L10.5 21 Z" fill="none" stroke="#0F6E56" stroke-width="2.2" stroke-linejoin="round"/></svg>
+        </span>
+        <h2>3. 加工をふりかえろう</h2>
+        <p>自分の加工を見直して、気づいたことをまとめよう</p>
+      </button>
+
+      <button class="entry-card" data-goto="view-ws3" style="grid-column:1 / -1;">
+        <span class="done-badge" id="badge-ws3" style="display:none;">クリア</span>
+        <span class="icon-badge" style="background:var(--sun-pale);">
+          <svg width="26" height="26" viewBox="0 0 28 28"><path d="M14 4 L16.6 10.6 L23.6 11.2 L18.3 15.8 L19.9 22.6 L14 19 L8.1 22.6 L9.7 15.8 L4.4 11.2 L11.4 10.6 Z" fill="none" stroke="#B7660F" stroke-width="2.2" stroke-linejoin="round"/></svg>
+        </span>
+        <h2>4. 今日の学びをふりかえろう</h2>
+        <p>学習全体をふりかえって、これからに生かそう</p>
+      </button>
+    </div>
   </section>
 
-  <!-- ============ STEP 0: intent ============ -->
-  <section id="view-intent" class="view">
+  <!-- ============ REFERENCE COMPARE ============ -->
+  <section id="view-reference" class="view">
     <div class="section-top">
-      <button class="back-btn" data-goto="view-select">←</button>
+      <button class="back-btn" data-goto="view-home">←</button>
+      <h2>見本:加工前・加工後</h2>
+    </div>
+    <div class="ref-card">
+      <div class="compare-row">
+        <div class="compare-col"><canvas id="ref-before-canvas" width="480" height="360"></canvas><div class="cap">加工前</div></div>
+        <div class="compare-col"><canvas id="ref-after-canvas" width="480" height="360"></canvas><div class="cap">加工後</div></div>
+      </div>
+      <p class="hint">切り抜き・明るさ・文字が変わると、伝わる印象がどう変わるか見くらべてみよう。</p>
+    </div>
+  </section>
+
+  <section id="view-ws1" class="view">
+    <div class="section-top">
+      <button class="back-btn" data-goto="view-home">←</button>
+      <h2>ワークシート1 ちがいを見つけよう</h2>
+    </div>
+    <div class="worksheet-card">
+      <div class="ws-item">
+        <label>① 文字</label>
+        <div class="ws-pair">
+          <div><div class="ws-sub">どう変わった?</div><div class="ws-hint">例:文字が大きくなって、目立つようになった</div><textarea id="ws1-1" placeholder="どう変わったか書こう" style="min-height:56px;"></textarea></div>
+          <div><div class="ws-sub">どんな印象になった?</div><div class="ws-hint">例:元気な感じがする</div><textarea id="ws1-2" placeholder="印象を書こう" style="min-height:56px;"></textarea></div>
+        </div>
+      </div>
+      <div class="ws-item">
+        <label>② 明るさ・色合い</label>
+        <div class="ws-pair">
+          <div><div class="ws-sub">どう変わった?</div><div class="ws-hint">例:写真が明るくなった</div><textarea id="ws1-3" placeholder="どう変わったか書こう" style="min-height:56px;"></textarea></div>
+          <div><div class="ws-sub">どんな印象になった?</div><div class="ws-hint">例:楽しそうで、はっきり見える</div><textarea id="ws1-4" placeholder="印象を書こう" style="min-height:56px;"></textarea></div>
+        </div>
+      </div>
+      <div class="ws-item">
+        <label>③ 切り取り方(トリミング)</label>
+        <div class="ws-pair">
+          <div><div class="ws-sub">どう変わった?</div><div class="ws-hint">例:人物が大きく写るようになった</div><textarea id="ws1-5" placeholder="どう変わったか書こう" style="min-height:56px;"></textarea></div>
+          <div><div class="ws-sub">どんな印象になった?</div><div class="ws-hint">例:迫力が出た</div><textarea id="ws1-6" placeholder="印象を書こう" style="min-height:56px;"></textarea></div>
+        </div>
+      </div>
+      <div class="ws-item">
+        <label>④ 全体の印象のちがい</label>
+        <div class="ws-hint">例:全体的に、元気で楽しそうな雰囲気になった</div>
+        <textarea id="ws1-7" placeholder="3つの変化をふまえて、全体としてどう印象が変わったか書こう"></textarea>
+      </div>
+      <div class="ws-item">
+        <label>⑤ 一番効いていると思う変化と、その理由</label>
+        <div class="ws-hint">例:文字が一番効いていると思う。言葉が変わるだけで、パッと見た瞬間の気持ちが変わるから</div>
+        <textarea id="ws1-8" placeholder="文字・明るさ・切り取り方のうち、一番印象に影響したと思うものと理由を書こう"></textarea>
+      </div>
+      <div class="error-msg" id="ws1-error">まだ書いていないところがあります。8つとも書いてから保存しましょう。</div>
+      <div class="save-row">
+        <button class="save-btn" id="ws1-save-btn">保存する</button>
+        <span class="save-msg" id="ws1-save-msg">保存しました</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="view-ws2" class="view">
+    <div class="section-top">
+      <button class="back-btn" data-goto="view-home">←</button>
+      <h2>ワークシート2 自分の加工をふりかえろう</h2>
+    </div>
+    <div class="worksheet-card">
+      <div class="ws-item">
+        <label>① 選んだ写真</label>
+        <div class="ws-hint">例:サッカー部</div>
+        <textarea id="ws2-1" placeholder="どの写真を選んだか書こう" style="min-height:56px;"></textarea>
+      </div>
+      <div class="ws-item">
+        <label>② めざした印象</label>
+        <div class="ws-hint">例:元気 / 静か / 真剣 / 楽しい / かっこいい</div>
+        <textarea id="ws2-2" placeholder="どんな印象をめざしたか書こう" style="min-height:56px;"></textarea>
+      </div>
+      <div class="ws-item">
+        <label>③ どんな加工をしたか</label>
+        <div class="ws-pair3">
+          <div><div class="ws-sub">切り抜き</div><div class="ws-hint">例:人物を大きくした</div><textarea id="ws2-3" placeholder="切り抜き" style="min-height:56px;"></textarea></div>
+          <div><div class="ws-sub">明るさ</div><div class="ws-hint">例:少し明るくした</div><textarea id="ws2-4" placeholder="明るさ" style="min-height:56px;"></textarea></div>
+          <div><div class="ws-sub">文字</div><div class="ws-hint">例:黄色で下に入れた</div><textarea id="ws2-5" placeholder="文字" style="min-height:56px;"></textarea></div>
+        </div>
+      </div>
+      <div class="ws-item">
+        <label>④ 加工前後で、印象はどう変わったか</label>
+        <div class="ws-hint">例:加工前は暗くて地味だったが、加工後は明るく元気な印象になった</div>
+        <textarea id="ws2-6" placeholder="加工前と加工後を見くらべて、印象がどう変わったか書こう"></textarea>
+      </div>
+      <div class="ws-item">
+        <label>⑤ めざした印象になったか(理由もいっしょに)</label>
+        <div class="ws-hint">例:めざした通り、元気な印象になった。文字と明るさの両方が効いたと思う</div>
+        <textarea id="ws2-7" placeholder="めざした印象に近づけられたと思うか、理由も書こう"></textarea>
+      </div>
+      <div class="ws-item">
+        <label>⑥ 友だちが同じ写真を選んだら、同じ加工になると思うか</label>
+        <div class="ws-hint">例:静かな感じにしたい人は、暗めの色や落ち着いた言葉を選ぶと思う。人によって加工のしかたは変わると思う</div>
+        <textarea id="ws2-8" placeholder="同じような加工をすると思うか、ちがう加工になると思うか、理由も書こう"></textarea>
+      </div>
+      <div class="error-msg" id="ws2-error">まだ書いていないところがあります。8つとも書いてから保存しましょう。</div>
+      <div class="save-row">
+        <button class="save-btn" id="ws2-save-btn">保存する</button>
+        <span class="save-msg" id="ws2-save-msg">保存しました</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="view-ws3" class="view">
+    <div class="section-top">
+      <button class="back-btn" data-goto="view-home">←</button>
+      <h2>ふりかえり 今日の学びをまとめよう</h2>
+    </div>
+    <div class="worksheet-card">
+      <div class="ws-item">
+        <label>① 今日の学習で、わかったこと・考えたこと</label>
+        <div class="ws-hint">例:同じ写真でも、加工のしかたで受け取る印象が変わることが分かった</div>
+        <textarea id="ws3-1" placeholder="わかったこと・考えたことを書こう"></textarea>
+      </div>
+      <div class="ws-item">
+        <label>② これから写真やポスターを見るとき・作るときに、気をつけたいこと</label>
+        <div class="ws-hint">例:見るときは「どうしてこう見せているのかな」と考えてみたい。作るときは、伝えたいことに合わせて工夫したい</div>
+        <textarea id="ws3-2" placeholder="これから気をつけたいことを書こう"></textarea>
+      </div>
+      <div class="error-msg" id="ws3-error">まだ書いていないところがあります。2つとも書いてから保存しましょう。</div>
+      <div class="save-row">
+        <button class="save-btn" id="ws3-save-btn">保存する</button>
+        <span class="save-msg" id="ws3-save-msg">保存しました</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ EDIT TOOL: select ============ -->
+  <section id="edit-select" class="view">
+    <div class="section-top">
+      <button class="back-btn" data-goto="view-home">←</button>
+      <h2>写真をえらぼう</h2>
+    </div>
+    <div class="group-label">運動部</div>
+    <div class="photo-grid" id="grid-sports"></div>
+    <div class="group-label">文化部</div>
+    <div class="photo-grid" id="grid-culture"></div>
+    <div class="group-label">小学校の活動</div>
+    <div class="photo-grid" id="grid-elementary"></div>
+  </section>
+
+  <!-- ============ EDIT TOOL: intent ============ -->
+  <section id="edit-intent" class="view">
+    <div class="section-top">
+      <button class="back-btn" data-goto="edit-select">←</button>
       <h2 id="intent-title">どんな印象にしたい?</h2>
     </div>
     <div class="editor-card">
       <p style="color:var(--ink-soft);font-size:14px;margin-bottom:14px;">作業をはじめる前に、めざす印象を1つ選んでみよう</p>
       <div class="intent-row" id="intent-row"></div>
-      <div class="btn-row">
-        <button class="btn btn-primary" id="intent-next-btn">つくりはじめる</button>
-      </div>
+      <div class="btn-row"><button class="btn btn-primary" id="intent-next-btn">つくりはじめる</button></div>
     </div>
   </section>
 
-  <!-- ============ STEP 1: crop ============ -->
-  <section id="view-crop" class="view">
+  <!-- ============ EDIT TOOL: crop ============ -->
+  <section id="edit-crop" class="view">
     <div class="section-top">
-      <button class="back-btn" data-goto="view-intent">←</button>
+      <button class="back-btn" data-goto="edit-intent">←</button>
       <h2>ステップ1 切り抜き</h2>
     </div>
-    <div class="step-progress">
-      <div class="dot on"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
-    </div>
+    <div class="step-progress"><div class="dot on"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
     <div class="editor-card">
       <p style="color:var(--ink-soft);font-size:14px;margin-bottom:12px;">白いわくをドラッグして、見せたい部分を選ぼう</p>
       <div class="canvas-stage" id="crop-stage">
@@ -154,19 +367,15 @@
     </div>
   </section>
 
-  <!-- ============ STEP 2: brightness ============ -->
-  <section id="view-brightness" class="view">
+  <!-- ============ EDIT TOOL: brightness ============ -->
+  <section id="edit-brightness" class="view">
     <div class="section-top">
-      <button class="back-btn" data-goto="view-crop">←</button>
+      <button class="back-btn" data-goto="edit-crop">←</button>
       <h2>ステップ2 明るさ</h2>
     </div>
-    <div class="step-progress">
-      <div class="dot on"></div><div class="dot on"></div><div class="dot"></div><div class="dot"></div>
-    </div>
+    <div class="step-progress"><div class="dot on"></div><div class="dot on"></div><div class="dot"></div><div class="dot"></div></div>
     <div class="editor-card">
-      <div class="canvas-stage">
-        <canvas id="brightness-canvas" width="480" height="360"></canvas>
-      </div>
+      <div class="canvas-stage"><canvas id="brightness-canvas" width="480" height="360"></canvas></div>
       <div class="control-block">
         <label for="brightness-slider">明るさ</label>
         <input type="range" id="brightness-slider" min="40" max="180" value="100">
@@ -178,35 +387,22 @@
     </div>
   </section>
 
-  <!-- ============ STEP 3: text ============ -->
-  <section id="view-text" class="view">
+  <!-- ============ EDIT TOOL: text ============ -->
+  <section id="edit-text" class="view">
     <div class="section-top">
-      <button class="back-btn" data-goto="view-brightness">←</button>
+      <button class="back-btn" data-goto="edit-brightness">←</button>
       <h2>ステップ3 文字入れ</h2>
     </div>
-    <div class="step-progress">
-      <div class="dot on"></div><div class="dot on"></div><div class="dot on"></div><div class="dot"></div>
-    </div>
+    <div class="step-progress"><div class="dot on"></div><div class="dot on"></div><div class="dot on"></div><div class="dot"></div></div>
     <div class="editor-card">
-      <div class="canvas-stage">
-        <canvas id="text-canvas" width="480" height="360"></canvas>
-      </div>
+      <div class="canvas-stage"><canvas id="text-canvas" width="480" height="360"></canvas></div>
       <div class="control-block">
         <label for="text-input">入れる言葉</label>
         <input type="text" id="text-input" maxlength="20" placeholder="例:熱く盛り上がろう!">
       </div>
-      <div class="control-block">
-        <label>文字の色</label>
-        <div class="swatch-row" id="color-swatches"></div>
-      </div>
-      <div class="control-block">
-        <label>文字の位置</label>
-        <div class="preset-row" id="position-presets"></div>
-      </div>
-      <div class="control-block">
-        <label>文字の大きさ</label>
-        <div class="preset-row" id="size-presets"></div>
-      </div>
+      <div class="control-block"><label>文字の色</label><div class="swatch-row" id="color-swatches"></div></div>
+      <div class="control-block"><label>文字の位置</label><div class="preset-row" id="position-presets"></div></div>
+      <div class="control-block"><label>文字の大きさ</label><div class="preset-row" id="size-presets"></div></div>
       <div class="btn-row">
         <button class="btn btn-ghost" id="text-reset-btn">文字をけす</button>
         <button class="btn btn-primary" id="text-next-btn">できあがりを見る</button>
@@ -214,27 +410,24 @@
     </div>
   </section>
 
-  <!-- ============ STEP 4: compare & download ============ -->
-  <section id="view-result" class="view">
+  <!-- ============ EDIT TOOL: result ============ -->
+  <section id="edit-result" class="view">
     <div class="section-top">
-      <button class="back-btn" data-goto="view-text">←</button>
+      <button class="back-btn" data-goto="edit-text">←</button>
       <h2>できあがり</h2>
     </div>
     <div class="editor-card">
       <div class="compare-row">
-        <div class="compare-col">
-          <canvas id="result-before-canvas" width="480" height="360"></canvas>
-          <div class="cap">加工前</div>
-        </div>
-        <div class="compare-col">
-          <canvas id="result-after-canvas" width="480" height="360"></canvas>
-          <div class="cap">加工後</div>
-        </div>
+        <div class="compare-col"><canvas id="result-before-canvas" width="480" height="360"></canvas><div class="cap">加工前</div></div>
+        <div class="compare-col"><canvas id="result-after-canvas" width="480" height="360"></canvas><div class="cap">加工後</div></div>
       </div>
-      <p class="hint">加工前と加工後で、印象はどう変わったかな?ワークシートに書き出してみよう。</p>
+      <p class="hint" style="text-align:center;color:var(--ink-soft);font-size:13px;margin-top:14px;">加工前と加工後で、印象はどう変わったかな?つぎは「3. 加工をふりかえろう」で、ふりかえろう。</p>
       <div class="btn-row">
-        <button class="btn btn-ghost" data-goto="view-select">べつの写真をえらぶ</button>
+        <button class="btn btn-ghost" data-goto="edit-select">べつの写真をえらぶ</button>
         <button class="btn btn-sun" id="download-btn">画像を保存する</button>
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-primary" id="edit-done-btn">ホームへもどる</button>
       </div>
     </div>
   </section>
@@ -242,31 +435,59 @@
 </div>
 
 <script>
-/* ------------------------------------------------------------------
-   写真の管理
-   本番では、この PHOTO_SOURCES の draw 関数を、実際の写真ファイルの
-   読み込み処理(image.src = "実写真のURL"; drawImage(...))に差し替えれば
-   良い。仮画像はすべてイラストで、canvas に直接描画している。
-------------------------------------------------------------------- */
-const W = 800, H = 600;
-
-function bgFill(ctx, color){
-  ctx.fillStyle = color;
-  ctx.fillRect(0,0,W,H);
+const STORAGE_KEY = "poster_app_state_v2";
+function loadState(){
+  try{
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if(!raw) return {progress:{ws1:false,edit:false,ws2:false,ws3:false}, ws1:{}, ws2:{}, ws3:{}};
+    return Object.assign({progress:{ws1:false,edit:false,ws2:false,ws3:false}, ws1:{}, ws2:{}, ws3:{}}, JSON.parse(raw));
+  }catch(e){ return {progress:{ws1:false,edit:false,ws2:false,ws3:false}, ws1:{}, ws2:{}, ws3:{}}; }
 }
+function saveState(){ try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }catch(e){} }
+let state = loadState();
+
+function showView(id){
+  document.querySelectorAll(".view").forEach(v=>v.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+  if(id==="view-home") renderHome();
+  window.scrollTo({top:0, behavior:"instant"});
+}
+document.querySelectorAll("[data-goto]").forEach(el=>{
+  el.addEventListener("click", ()=> showView(el.getAttribute("data-goto")));
+});
+
+function renderHome(){
+  const order=["ws1","edit","ws2","ws3"];
+  const row = document.getElementById("stamp-row");
+  row.innerHTML="";
+  let doneCount=0;
+  order.forEach(key=>{
+    const done = !!state.progress[key];
+    if(done) doneCount++;
+    const d = document.createElement("div");
+    d.className = "stamp" + (done ? " done" : "");
+    d.textContent = done ? "\u2713" : (order.indexOf(key)+1);
+    row.appendChild(d);
+    const badge = document.getElementById("badge-"+key);
+    if(badge) badge.style.display = done ? "inline-block" : "none";
+  });
+  document.getElementById("progress-text").textContent = doneCount + " / 4 スタンプ";
+}
+
+/* ==================================================================
+   写真の管理(仮イラスト)
+   本番差し替え時は PHOTO_SOURCES[key].draw を、実写真の
+   image.src 読み込み処理に置き換える。
+=================================================================== */
+const W = 800, H = 600;
+function bgFill(ctx, color){ ctx.fillStyle = color; ctx.fillRect(0,0,W,H); }
 function person(ctx, x, y, scale, skin, shirt){
-  ctx.save();
-  ctx.translate(x,y);
-  ctx.scale(scale,scale);
+  ctx.save(); ctx.translate(x,y); ctx.scale(scale,scale);
   ctx.fillStyle = shirt;
-  ctx.beginPath();
-  ctx.moveTo(-30,20); ctx.lineTo(-24,-30); ctx.lineTo(24,-30); ctx.lineTo(30,20);
-  ctx.closePath(); ctx.fill();
-  ctx.fillStyle = skin;
-  ctx.beginPath(); ctx.arc(0,-52,22,0,Math.PI*2); ctx.fill();
+  ctx.beginPath(); ctx.moveTo(-30,20); ctx.lineTo(-24,-30); ctx.lineTo(24,-30); ctx.lineTo(30,20); ctx.closePath(); ctx.fill();
+  ctx.fillStyle = skin; ctx.beginPath(); ctx.arc(0,-52,22,0,Math.PI*2); ctx.fill();
   ctx.restore();
 }
-
 const PHOTO_SOURCES = {
   basketball:{label:"バスケットボール部", group:"sports", draw:(ctx)=>{
     bgFill(ctx,"#E9C88A");
@@ -280,8 +501,7 @@ const PHOTO_SOURCES = {
   }},
   soccer:{label:"サッカー部", group:"sports", draw:(ctx)=>{
     bgFill(ctx,"#8FC15C");
-    ctx.strokeStyle="rgba(255,255,255,.8)"; ctx.lineWidth=6;
-    ctx.strokeRect(60,60,W-120,H-120);
+    ctx.strokeStyle="rgba(255,255,255,.8)"; ctx.lineWidth=6; ctx.strokeRect(60,60,W-120,H-120);
     ctx.beginPath(); ctx.arc(400,300,80,0,Math.PI*2); ctx.stroke();
     ctx.strokeRect(60,220,90,160);
     ctx.fillStyle="#fff"; ctx.beginPath(); ctx.arc(500,380,26,0,Math.PI*2); ctx.fill();
@@ -355,96 +575,91 @@ const PHOTO_SOURCES = {
     person(ctx,570,360,2.0,"#E8B98A","#D4537E");
   }}
 };
-
 function getSourceCanvas(key){
-  const c = document.createElement("canvas");
-  c.width = W; c.height = H;
-  const ctx = c.getContext("2d");
-  PHOTO_SOURCES[key].draw(ctx);
+  const c = document.createElement("canvas"); c.width=W; c.height=H;
+  PHOTO_SOURCES[key].draw(c.getContext("2d"));
   return c;
 }
 
-/* ------------------------------------------------------------------ */
+/* ---------------- reference compare (見本) ---------------- */
+function renderReference(){
+  const beforeCtx = document.getElementById("ref-before-canvas").getContext("2d");
+  beforeCtx.clearRect(0,0,480,360);
+  beforeCtx.drawImage(getSourceCanvas("basketball"),0,0,W,H,0,0,480,360);
 
-const groupTitles = {sports:"grid-sports", culture:"grid-culture", elementary:"grid-elementary"};
-Object.keys(groupTitles).forEach(g=>{
-  const grid = document.getElementById(groupTitles[g]);
+  const src = getSourceCanvas("basketball");
+  const cropped = document.createElement("canvas"); cropped.width=W; cropped.height=H;
+  cropped.getContext("2d").drawImage(src, 120,60,560,480, 0,0,W,H);
+  const baked = document.createElement("canvas"); baked.width=W; baked.height=H;
+  const bctx = baked.getContext("2d");
+  bctx.filter = "brightness(135%)";
+  bctx.drawImage(cropped,0,0);
+  bctx.filter = "none";
+
+  const afterCtx = document.getElementById("ref-after-canvas").getContext("2d");
+  afterCtx.clearRect(0,0,480,360);
+  afterCtx.drawImage(baked,0,0,W,H,0,0,480,360);
+  afterCtx.font = "900 34px 'Zen Maru Gothic', sans-serif";
+  afterCtx.textAlign = "center";
+  afterCtx.lineWidth = 6;
+  afterCtx.strokeStyle = "rgba(0,0,0,0.55)";
+  afterCtx.strokeText("熱く盛り上がろう!", 240, 336);
+  afterCtx.fillStyle = "#FFFFFF";
+  afterCtx.fillText("熱く盛り上がろう!", 240, 336);
+}
+document.querySelector('[data-goto="view-reference"]').addEventListener("click", renderReference);
+
+/* ---------------- photo select grid ---------------- */
+const groupIds = {sports:"grid-sports", culture:"grid-culture", elementary:"grid-elementary"};
+Object.keys(groupIds).forEach(g=>{
+  const grid = document.getElementById(groupIds[g]);
   Object.keys(PHOTO_SOURCES).filter(k=>PHOTO_SOURCES[k].group===g).forEach(key=>{
     const card = document.createElement("div");
     card.className = "photo-card";
-    const cv = document.createElement("canvas");
-    cv.width = 160; cv.height = 120;
+    const cv = document.createElement("canvas"); cv.width=160; cv.height=120;
     card.appendChild(cv);
-    const name = document.createElement("div");
-    name.className = "name";
-    name.textContent = PHOTO_SOURCES[key].label;
+    const name = document.createElement("div"); name.className="name"; name.textContent = PHOTO_SOURCES[key].label;
     card.appendChild(name);
     grid.appendChild(card);
-    const ctx = cv.getContext("2d");
-    ctx.drawImage(getSourceCanvas(key), 0, 0, 160, 120);
+    cv.getContext("2d").drawImage(getSourceCanvas(key),0,0,160,120);
     card.addEventListener("click", ()=> selectPhoto(key));
   });
 });
 
-/* ------------------------------------------------------------------
-   状態管理
-------------------------------------------------------------------- */
-let session = {
-  key:null,
-  intent:null,
-  originalCanvas:null,
-  workingCanvas:null,
-  brightnessValue:100,
-  textConfig:null
-};
-
-function showView(id){
-  document.querySelectorAll(".view").forEach(v=>v.classList.remove("active"));
-  document.getElementById(id).classList.add("active");
-  window.scrollTo({top:0, behavior:"instant"});
-}
-document.querySelectorAll("[data-goto]").forEach(el=>{
-  el.addEventListener("click", ()=> showView(el.getAttribute("data-goto")));
-});
+/* ---------------- session state ---------------- */
+let session = {key:null, intent:null, originalCanvas:null, workingCanvas:null, brightnessValue:100, textConfig:null};
 
 function selectPhoto(key){
   session.key = key;
   session.originalCanvas = getSourceCanvas(key);
   session.workingCanvas = document.createElement("canvas");
-  session.workingCanvas.width = W; session.workingCanvas.height = H;
+  session.workingCanvas.width=W; session.workingCanvas.height=H;
   session.workingCanvas.getContext("2d").drawImage(session.originalCanvas,0,0);
   session.brightnessValue = 100;
   session.textConfig = null;
   document.getElementById("intent-title").textContent = PHOTO_SOURCES[key].label + " のポスターをつくろう";
-  showView("view-intent");
+  showView("edit-intent");
 }
 
 /* ---------------- intent ---------------- */
 const intents = ["元気","静か","真剣","楽しい","かっこいい"];
 const intentRow = document.getElementById("intent-row");
 intents.forEach(t=>{
-  const b = document.createElement("button");
-  b.className = "intent-btn";
-  b.textContent = t;
+  const b = document.createElement("button"); b.className="intent-btn"; b.textContent=t;
   b.addEventListener("click", ()=>{
     document.querySelectorAll(".intent-btn").forEach(x=>x.classList.remove("selected"));
-    b.classList.add("selected");
-    session.intent = t;
+    b.classList.add("selected"); session.intent = t;
   });
   intentRow.appendChild(b);
 });
-document.getElementById("intent-next-btn").addEventListener("click", ()=>{
-  showView("view-crop");
-  initCropStage();
-});
+document.getElementById("intent-next-btn").addEventListener("click", ()=>{ showView("edit-crop"); initCropStage(); });
 
-/* ---------------- STEP1: crop ---------------- */
+/* ---------------- crop ---------------- */
 const cropCanvas = document.getElementById("crop-canvas");
 const cropCtx = cropCanvas.getContext("2d");
 const cropOverlay = document.getElementById("crop-overlay");
 const cropStage = document.getElementById("crop-stage");
 let cropRect = {x:60,y:45,w:360,h:270};
-
 function initCropStage(){
   cropCtx.clearRect(0,0,W,H);
   cropCtx.drawImage(session.workingCanvas,0,0,W,H,0,0,480,360);
@@ -452,23 +667,17 @@ function initCropStage(){
   renderCropOverlay();
 }
 function renderCropOverlay(){
-  cropOverlay.style.left = cropRect.x+"px";
-  cropOverlay.style.top = cropRect.y+"px";
-  cropOverlay.style.width = cropRect.w+"px";
-  cropOverlay.style.height = cropRect.h+"px";
+  cropOverlay.style.left=cropRect.x+"px"; cropOverlay.style.top=cropRect.y+"px";
+  cropOverlay.style.width=cropRect.w+"px"; cropOverlay.style.height=cropRect.h+"px";
 }
-document.getElementById("crop-reset-btn").addEventListener("click", ()=>{
-  cropRect = {x:60,y:45,w:360,h:270};
-  renderCropOverlay();
-});
-
+document.getElementById("crop-reset-btn").addEventListener("click", ()=>{ cropRect={x:60,y:45,w:360,h:270}; renderCropOverlay(); });
 let dragMode=null, dragStart=null, rectStart=null;
 function stagePos(evt){
   const r = cropStage.getBoundingClientRect();
-  const scaleX = 480/r.width, scaleY = 360/r.height;
-  const clientX = evt.touches ? evt.touches[0].clientX : evt.clientX;
-  const clientY = evt.touches ? evt.touches[0].clientY : evt.clientY;
-  return {x:(clientX-r.left)*scaleX, y:(clientY-r.top)*scaleY};
+  const scaleX=480/r.width, scaleY=360/r.height;
+  const cx = evt.touches ? evt.touches[0].clientX : evt.clientX;
+  const cy = evt.touches ? evt.touches[0].clientY : evt.clientY;
+  return {x:(cx-r.left)*scaleX, y:(cy-r.top)*scaleY};
 }
 cropOverlay.addEventListener("mousedown", startDrag);
 cropOverlay.addEventListener("touchstart", startDrag, {passive:true});
@@ -483,10 +692,11 @@ window.addEventListener("mousemove", onDrag);
 window.addEventListener("touchmove", onDrag, {passive:true});
 window.addEventListener("mouseup", ()=>{dragMode=null;});
 window.addEventListener("touchend", ()=>{dragMode=null;});
+function clamp(v,min,max){return Math.max(min,Math.min(max,v));}
 function onDrag(evt){
   if(!dragMode) return;
   const pos = stagePos(evt);
-  const dx = pos.x - dragStart.x, dy = pos.y - dragStart.y;
+  const dx = pos.x-dragStart.x, dy = pos.y-dragStart.y;
   let r = Object.assign({}, rectStart);
   if(dragMode==="move"){
     r.x = clamp(rectStart.x+dx, 0, 480-rectStart.w);
@@ -495,126 +705,87 @@ function onDrag(evt){
     r.w = clamp(rectStart.w+dx, 40, 480-rectStart.x);
     r.h = clamp(rectStart.h+dy, 40, 360-rectStart.y);
   } else if(dragMode==="nw"){
-    const newX = clamp(rectStart.x+dx, 0, rectStart.x+rectStart.w-40);
-    const newY = clamp(rectStart.y+dy, 0, rectStart.y+rectStart.h-40);
-    r.w = rectStart.w + (rectStart.x-newX);
-    r.h = rectStart.h + (rectStart.y-newY);
-    r.x = newX; r.y = newY;
+    const nx = clamp(rectStart.x+dx, 0, rectStart.x+rectStart.w-40);
+    const ny = clamp(rectStart.y+dy, 0, rectStart.y+rectStart.h-40);
+    r.w = rectStart.w+(rectStart.x-nx); r.h = rectStart.h+(rectStart.y-ny); r.x=nx; r.y=ny;
   } else if(dragMode==="ne"){
-    const newY = clamp(rectStart.y+dy, 0, rectStart.y+rectStart.h-40);
+    const ny = clamp(rectStart.y+dy, 0, rectStart.y+rectStart.h-40);
     r.w = clamp(rectStart.w+dx, 40, 480-rectStart.x);
-    r.h = rectStart.h + (rectStart.y-newY);
-    r.y = newY;
+    r.h = rectStart.h+(rectStart.y-ny); r.y=ny;
   } else if(dragMode==="sw"){
-    const newX = clamp(rectStart.x+dx, 0, rectStart.x+rectStart.w-40);
-    r.w = rectStart.w + (rectStart.x-newX);
-    r.h = clamp(rectStart.h+dy, 40, 360-rectStart.y);
-    r.x = newX;
+    const nx = clamp(rectStart.x+dx, 0, rectStart.x+rectStart.w-40);
+    r.w = rectStart.w+(rectStart.x-nx);
+    r.h = clamp(rectStart.h+dy, 40, 360-rectStart.y); r.x=nx;
   }
-  cropRect = r;
-  renderCropOverlay();
+  cropRect = r; renderCropOverlay();
 }
-function clamp(v,min,max){return Math.max(min,Math.min(max,v));}
-
 document.getElementById("crop-apply-btn").addEventListener("click", ()=>{
   const scale = W/480;
-  const sx = cropRect.x*scale, sy = cropRect.y*scale, sw = cropRect.w*scale, sh = cropRect.h*scale;
-  const cropped = document.createElement("canvas");
-  cropped.width = W; cropped.height = H;
-  cropped.getContext("2d").drawImage(session.workingCanvas, sx, sy, sw, sh, 0, 0, W, H);
+  const sx=cropRect.x*scale, sy=cropRect.y*scale, sw=cropRect.w*scale, sh=cropRect.h*scale;
+  const cropped = document.createElement("canvas"); cropped.width=W; cropped.height=H;
+  cropped.getContext("2d").drawImage(session.workingCanvas, sx,sy,sw,sh, 0,0,W,H);
   session.workingCanvas = cropped;
-  showView("view-brightness");
-  initBrightnessStage();
+  showView("edit-brightness"); initBrightnessStage();
 });
 
-/* ---------------- STEP2: brightness ---------------- */
+/* ---------------- brightness ---------------- */
 const brightCanvas = document.getElementById("brightness-canvas");
 const brightCtx = brightCanvas.getContext("2d");
 const brightSlider = document.getElementById("brightness-slider");
-
-function initBrightnessStage(){
-  brightSlider.value = 100;
-  session.brightnessValue = 100;
-  renderBrightness();
-}
+function initBrightnessStage(){ brightSlider.value=100; session.brightnessValue=100; renderBrightness(); }
 function renderBrightness(){
   brightCtx.clearRect(0,0,480,360);
   brightCtx.filter = "brightness(" + session.brightnessValue + "%)";
   brightCtx.drawImage(session.workingCanvas,0,0,W,H,0,0,480,360);
   brightCtx.filter = "none";
 }
-brightSlider.addEventListener("input", ()=>{
-  session.brightnessValue = parseInt(brightSlider.value,10);
-  renderBrightness();
-});
-document.getElementById("brightness-reset-btn").addEventListener("click", ()=>{
-  brightSlider.value = 100;
-  session.brightnessValue = 100;
-  renderBrightness();
-});
+brightSlider.addEventListener("input", ()=>{ session.brightnessValue=parseInt(brightSlider.value,10); renderBrightness(); });
+document.getElementById("brightness-reset-btn").addEventListener("click", ()=>{ brightSlider.value=100; session.brightnessValue=100; renderBrightness(); });
 document.getElementById("brightness-next-btn").addEventListener("click", ()=>{
-  const baked = document.createElement("canvas");
-  baked.width = W; baked.height = H;
+  const baked = document.createElement("canvas"); baked.width=W; baked.height=H;
   const bctx = baked.getContext("2d");
   bctx.filter = "brightness(" + session.brightnessValue + "%)";
   bctx.drawImage(session.workingCanvas,0,0);
   bctx.filter = "none";
   session.workingCanvas = baked;
-  showView("view-text");
-  initTextStage();
+  showView("edit-text"); initTextStage();
 });
 
-/* ---------------- STEP3: text ---------------- */
+/* ---------------- text ---------------- */
 const textCanvas = document.getElementById("text-canvas");
 const textCtx = textCanvas.getContext("2d");
 const textInput = document.getElementById("text-input");
 const colorSwatchesEl = document.getElementById("color-swatches");
 const positionPresetsEl = document.getElementById("position-presets");
 const sizePresetsEl = document.getElementById("size-presets");
-
 const TEXT_COLORS = ["#FFFFFF","#F2984E","#E4636F","#4C9A6A","#1F5C79","#22303F"];
 const POSITIONS = [{key:"top",label:"上"},{key:"middle",label:"まん中"},{key:"bottom",label:"下"}];
 const SIZES = [{key:"small",label:"小",px:34},{key:"medium",label:"中",px:50},{key:"large",label:"大",px:68}];
-
 TEXT_COLORS.forEach((c,i)=>{
-  const sw = document.createElement("div");
-  sw.className = "swatch" + (i===0?" selected":"");
-  sw.style.background = c;
+  const sw = document.createElement("div"); sw.className="swatch"+(i===0?" selected":""); sw.style.background=c;
   sw.addEventListener("click", ()=>{
     document.querySelectorAll(".swatch").forEach(s=>s.classList.remove("selected"));
-    sw.classList.add("selected");
-    textState.color = c;
-    renderText();
+    sw.classList.add("selected"); textState.color=c; renderText();
   });
   colorSwatchesEl.appendChild(sw);
 });
 POSITIONS.forEach((p,i)=>{
-  const b = document.createElement("button");
-  b.className = "preset-btn" + (i===2?" selected":"");
-  b.textContent = p.label;
+  const b = document.createElement("button"); b.className="preset-btn"+(i===2?" selected":""); b.textContent=p.label;
   b.addEventListener("click", ()=>{
     document.querySelectorAll("#position-presets .preset-btn").forEach(x=>x.classList.remove("selected"));
-    b.classList.add("selected");
-    textState.position = p.key;
-    renderText();
+    b.classList.add("selected"); textState.position=p.key; renderText();
   });
   positionPresetsEl.appendChild(b);
 });
 SIZES.forEach((s,i)=>{
-  const b = document.createElement("button");
-  b.className = "preset-btn" + (i===1?" selected":"");
-  b.textContent = s.label;
+  const b = document.createElement("button"); b.className="preset-btn"+(i===1?" selected":""); b.textContent=s.label;
   b.addEventListener("click", ()=>{
     document.querySelectorAll("#size-presets .preset-btn").forEach(x=>x.classList.remove("selected"));
-    b.classList.add("selected");
-    textState.size = s.px;
-    renderText();
+    b.classList.add("selected"); textState.size=s.px; renderText();
   });
   sizePresetsEl.appendChild(b);
 });
-
 let textState = {color:TEXT_COLORS[0], position:"bottom", size:50};
-
 function initTextStage(){
   textInput.value = "";
   textState = {color:TEXT_COLORS[0], position:"bottom", size:50};
@@ -633,82 +804,111 @@ function renderText(){
     textCtx.font = "900 "+fontPx+"px 'Zen Maru Gothic', sans-serif";
     textCtx.textAlign = "center";
     let y;
-    if(textState.position==="top") y = fontPx+20;
-    else if(textState.position==="middle") y = 180+fontPx/3;
-    else y = 360-24;
+    if(textState.position==="top") y=fontPx+20;
+    else if(textState.position==="middle") y=180+fontPx/3;
+    else y=360-24;
     textCtx.lineWidth = fontPx*0.18;
     textCtx.strokeStyle = "rgba(0,0,0,0.55)";
-    textCtx.strokeText(text, 240, y);
+    textCtx.strokeText(text,240,y);
     textCtx.fillStyle = textState.color;
-    textCtx.fillText(text, 240, y);
+    textCtx.fillText(text,240,y);
   }
 }
 textInput.addEventListener("input", renderText);
-document.getElementById("text-reset-btn").addEventListener("click", ()=>{
-  textInput.value = "";
-  renderText();
-});
+document.getElementById("text-reset-btn").addEventListener("click", ()=>{ textInput.value=""; renderText(); });
 document.getElementById("text-next-btn").addEventListener("click", ()=>{
   session.textConfig = {text:textInput.value.trim(), color:textState.color, position:textState.position, size:textState.size};
-  showView("view-result");
-  renderResult();
+  showView("edit-result"); renderResult();
+  state.progress.edit = true; saveState();
 });
 
-/* ---------------- STEP4: result ---------------- */
+/* ---------------- result ---------------- */
 const resultBeforeCanvas = document.getElementById("result-before-canvas");
 const resultAfterCanvas = document.getElementById("result-after-canvas");
-
+function drawTextOn(ctx, cfg, w, h){
+  const text = cfg ? cfg.text : "";
+  if(!text || text.length===0) return;
+  const scale = w/W;
+  const fontPx = cfg.size*scale;
+  ctx.font = "900 "+fontPx+"px 'Zen Maru Gothic', sans-serif";
+  ctx.textAlign = "center";
+  let y;
+  if(cfg.position==="top") y=fontPx+20;
+  else if(cfg.position==="middle") y=h/2+fontPx/3;
+  else y=h-24;
+  ctx.lineWidth = fontPx*0.18;
+  ctx.strokeStyle = "rgba(0,0,0,0.55)";
+  ctx.strokeText(text, w/2, y);
+  ctx.fillStyle = cfg.color;
+  ctx.fillText(text, w/2, y);
+}
 function renderResult(){
   const beforeCtx = resultBeforeCanvas.getContext("2d");
   beforeCtx.clearRect(0,0,480,360);
   beforeCtx.drawImage(session.originalCanvas,0,0,W,H,0,0,480,360);
-
   const afterCtx = resultAfterCanvas.getContext("2d");
   afterCtx.clearRect(0,0,480,360);
   afterCtx.drawImage(session.workingCanvas,0,0,W,H,0,0,480,360);
-  const text = session.textConfig ? session.textConfig.text : "";
-  if(text && text.length>0){
-    const scale = 480/W;
-    const fontPx = session.textConfig.size*scale;
-    afterCtx.font = "900 "+fontPx+"px 'Zen Maru Gothic', sans-serif";
-    afterCtx.textAlign = "center";
-    let y;
-    if(session.textConfig.position==="top") y = fontPx+20;
-    else if(session.textConfig.position==="middle") y = 180+fontPx/3;
-    else y = 360-24;
-    afterCtx.lineWidth = fontPx*0.18;
-    afterCtx.strokeStyle = "rgba(0,0,0,0.55)";
-    afterCtx.strokeText(text, 240, y);
-    afterCtx.fillStyle = session.textConfig.color;
-    afterCtx.fillText(text, 240, y);
-  }
+  drawTextOn(afterCtx, session.textConfig, 480, 360);
 }
-
 document.getElementById("download-btn").addEventListener("click", ()=>{
-  const full = document.createElement("canvas");
-  full.width = W; full.height = H;
+  const full = document.createElement("canvas"); full.width=W; full.height=H;
   const fctx = full.getContext("2d");
   fctx.drawImage(session.workingCanvas,0,0);
-  const text = session.textConfig ? session.textConfig.text : "";
-  if(text && text.length>0){
-    const fontPx = session.textConfig.size;
-    fctx.font = "900 "+fontPx+"px 'Zen Maru Gothic', sans-serif";
-    fctx.textAlign = "center";
-    let y;
-    if(session.textConfig.position==="top") y = fontPx+30;
-    else if(session.textConfig.position==="middle") y = 300+fontPx/3;
-    else y = 600-40;
-    fctx.lineWidth = fontPx*0.18;
-    fctx.strokeStyle = "rgba(0,0,0,0.55)";
-    fctx.strokeText(text, 400, y);
-    fctx.fillStyle = session.textConfig.color;
-    fctx.fillText(text, 400, y);
-  }
+  drawTextOn(fctx, session.textConfig, W, H);
   const link = document.createElement("a");
   link.download = "poster_" + session.key + ".png";
   link.href = full.toDataURL("image/png");
   link.click();
 });
+document.getElementById("edit-done-btn").addEventListener("click", ()=>{ showView("view-home"); });
+
+/* ---------------- worksheets ---------------- */
+function setupWorksheet(prefix, fieldCount){
+  const fields = [];
+  for(let i=1;i<=fieldCount;i++) fields.push(document.getElementById(prefix+"-"+i));
+  const saveBtn = document.getElementById(prefix+"-save-btn");
+  const saveMsg = document.getElementById(prefix+"-save-msg");
+  const errorMsg = document.getElementById(prefix+"-error");
+
+  document.querySelector('[data-goto="view-'+prefix+'"]').addEventListener("click", ()=>{
+    const saved = state[prefix] || {};
+    fields.forEach((f,i)=>{ f.value = saved["f"+(i+1)] || ""; });
+    saveMsg.classList.remove("show");
+    errorMsg.classList.remove("show");
+  });
+  fields.forEach(f=>{
+    f.addEventListener("input", ()=>{
+      const allFilled = fields.every(x=>x.value.trim().length>0);
+      if(allFilled) errorMsg.classList.remove("show");
+    });
+  });
+  saveBtn.addEventListener("click", ()=>{
+    const allFilled = fields.every(f=>f.value.trim().length>0);
+    if(!allFilled){
+      errorMsg.classList.add("show");
+      saveMsg.classList.remove("show");
+      return;
+    }
+    errorMsg.classList.remove("show");
+    const data = {};
+    fields.forEach((f,i)=>{ data["f"+(i+1)] = f.value; });
+    state[prefix] = data;
+    state.progress[prefix] = true;
+    saveState();
+    saveMsg.classList.add("show");
+  });
+}
+setupWorksheet("ws1", 8);
+setupWorksheet("ws2", 8);
+setupWorksheet("ws3", 2);
+document.querySelector('[data-goto="view-ws2"]').addEventListener("click", ()=>{
+  const f1 = document.getElementById("ws2-1"), f2 = document.getElementById("ws2-2");
+  if(f1.value.trim()==="" && session.key) f1.value = PHOTO_SOURCES[session.key].label;
+  if(f2.value.trim()==="" && session.intent) f2.value = session.intent;
+});
+
+renderHome();
 </script>
 </body>
 </html>

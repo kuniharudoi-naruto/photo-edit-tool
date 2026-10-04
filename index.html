@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>写真をくふうしてポスターをつくろう</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@500;700;900&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#22303F; --ink-soft:#4B5C6B;
+    --paper:#F5F9FB; --card:#FFFFFF;
+    --sea-deep:#1F5C79; --sea:#2F7FA6; --sea-pale:#CFE8F1; --sea-pale2:#E7F4F8;
+    --sun:#F2984E; --sun-pale:#FCE6CD;
+    --leaf:#4C9A6A; --leaf-pale:#DDF0E2;
+    --coral:#E4636F; --coral-pale:#FBDEE0;
+    --line:#DCE7EC;
+    --radius-lg:24px; --radius-md:16px;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Zen Kaku Gothic New",sans-serif;-webkit-font-smoothing:antialiased;}
+  h1,h2,.display{font-family:"Zen Maru Gothic",sans-serif;font-weight:900;color:var(--sea-deep);margin:0;}
+  .wrap{max-width:720px;margin:0 auto;padding:20px 18px 60px;}
+  .view{display:none;}
+  .view.active{display:block;animation:fadeIn .3s ease;}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
+
+  .top-header{text-align:center;padding:14px 0 6px;}
+  .top-header .kicker{display:inline-block;background:var(--sun-pale);color:#8A4A12;font-weight:700;font-size:13px;padding:4px 14px;border-radius:999px;margin-bottom:10px;}
+  .top-header h1{font-size:24px;line-height:1.5;}
+  .top-header p{color:var(--ink-soft);font-size:14px;margin-top:8px;}
+
+  .group-label{font-family:"Zen Maru Gothic",sans-serif;font-weight:700;color:var(--sea-deep);font-size:14px;margin:22px 4px 10px;}
+  .card-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;}
+  @media (max-width:560px){.card-grid{grid-template-columns:1fr 1fr;}}
+  .photo-card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius-md);padding:10px;cursor:pointer;text-align:center;transition:transform .15s ease, box-shadow .15s ease;}
+  .photo-card:hover{transform:translateY(-2px);box-shadow:0 8px 18px rgba(31,92,121,.12);}
+  .photo-card canvas{width:100%;border-radius:10px;display:block;background:#fff;}
+  .photo-card .name{font-size:12px;font-weight:700;color:var(--ink);margin-top:8px;}
+
+  .section-top{display:flex;align-items:center;gap:12px;margin-bottom:18px;}
+  .back-btn{background:#fff;border:1px solid var(--line);border-radius:12px;width:40px;height:40px;font-size:18px;color:var(--sea-deep);cursor:pointer;flex-shrink:0;}
+  .back-btn:hover{background:var(--sea-pale2);}
+  .section-top h2{font-size:19px;}
+
+  .step-progress{display:flex;gap:6px;margin-bottom:18px;}
+  .step-progress .dot{flex:1;height:6px;border-radius:999px;background:var(--line);}
+  .step-progress .dot.on{background:var(--sea);}
+
+  .intent-row{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-bottom:18px;}
+  .intent-btn{padding:10px 18px;border-radius:999px;border:2px solid var(--sea-pale);background:#fff;font-family:"Zen Maru Gothic",sans-serif;font-weight:700;font-size:14px;color:var(--sea-deep);cursor:pointer;}
+  .intent-btn.selected{background:var(--sea);color:#fff;border-color:var(--sea);}
+
+  .editor-card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius-lg);padding:20px;text-align:center;}
+  .canvas-stage{position:relative;width:100%;max-width:480px;margin:0 auto;}
+  .canvas-stage canvas{width:100%;height:auto;display:block;border-radius:12px;background:#eee;touch-action:none;}
+  .crop-overlay{position:absolute;border:2px dashed #fff;box-shadow:0 0 0 2000px rgba(0,0,0,.35);cursor:move;}
+  .crop-handle{position:absolute;width:18px;height:18px;background:#fff;border:2px solid var(--sea);border-radius:50%;}
+  .crop-handle.nw{top:-9px;left:-9px;cursor:nwse-resize;}
+  .crop-handle.ne{top:-9px;right:-9px;cursor:nesw-resize;}
+  .crop-handle.sw{bottom:-9px;left:-9px;cursor:nesw-resize;}
+  .crop-handle.se{bottom:-9px;right:-9px;cursor:nwse-resize;}
+
+  .control-block{margin-top:20px;text-align:left;}
+  .control-block label{display:block;font-weight:700;font-size:14px;color:var(--sea-deep);margin-bottom:8px;}
+  .control-block input[type=range]{width:100%;}
+  .control-block input[type=text]{width:100%;padding:12px;border-radius:var(--radius-md);border:1px solid var(--line);font-size:15px;font-family:inherit;background:var(--sea-pale2);}
+
+  .swatch-row{display:flex;gap:10px;margin-top:6px;}
+  .swatch{width:36px;height:36px;border-radius:50%;border:3px solid transparent;cursor:pointer;}
+  .swatch.selected{border-color:var(--sea-deep);}
+
+  .preset-row{display:flex;gap:10px;margin-top:6px;flex-wrap:wrap;}
+  .preset-btn{padding:8px 16px;border-radius:999px;border:2px solid var(--sea-pale);background:#fff;font-size:13px;font-weight:700;color:var(--sea-deep);cursor:pointer;}
+  .preset-btn.selected{background:var(--sea);color:#fff;border-color:var(--sea);}
+
+  .btn-row{display:flex;gap:12px;margin-top:22px;}
+  .btn{flex:1;padding:14px;border-radius:var(--radius-md);border:none;font-family:"Zen Maru Gothic",sans-serif;font-weight:700;font-size:15px;cursor:pointer;}
+  .btn-primary{background:var(--sea);color:#fff;}
+  .btn-primary:hover{background:var(--sea-deep);}
+  .btn-ghost{background:#fff;border:1px solid var(--line);color:var(--sea-deep);}
+  .btn-ghost:hover{background:var(--sea-pale2);}
+  .btn-sun{background:var(--sun);color:#fff;}
+  .btn-sun:hover{background:#D97F36;}
+
+  .compare-row{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:10px;}
+  .compare-col{flex:1;min-width:180px;max-width:260px;}
+  .compare-col canvas{width:100%;border-radius:12px;border:1px solid var(--line);}
+  .compare-col .cap{text-align:center;font-size:13px;font-weight:700;color:var(--ink-soft);margin-top:6px;}
+  .hint{font-size:13px;color:var(--ink-soft);margin-top:14px;line-height:1.7;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- ============ HOME: choose category ============ -->
+  <section id="view-select" class="view active">
+    <div class="top-header">
+      <span class="kicker">6年生 情報の学習</span>
+      <h1>写真をくふうしてポスターをつくろう</h1>
+      <p>切り抜き・明るさ・文字入れで、伝わり方を変えてみよう</p>
+    </div>
+
+    <div class="group-label">運動部</div>
+    <div class="card-grid" id="grid-sports"></div>
+
+    <div class="group-label">文化部</div>
+    <div class="card-grid" id="grid-culture"></div>
+
+    <div class="group-label">小学校の活動</div>
+    <div class="card-grid" id="grid-elementary"></div>
+  </section>
+
+  <!-- ============ STEP 0: intent ============ -->
+  <section id="view-intent" class="view">
+    <div class="section-top">
+      <button class="back-btn" data-goto="view-select">←</button>
+      <h2 id="intent-title">どんな印象にしたい?</h2>
+    </div>
+    <div class="editor-card">
+      <p style="color:var(--ink-soft);font-size:14px;margin-bottom:14px;">作業をはじめる前に、めざす印象を1つ選んでみよう</p>
+      <div class="intent-row" id="intent-row"></div>
+      <div class="btn-row">
+        <button class="btn btn-primary" id="intent-next-btn">つくりはじめる</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ STEP 1: crop ============ -->
+  <section id="view-crop" class="view">
+    <div class="section-top">
+      <button class="back-btn" data-goto="view-intent">←</button>
+      <h2>ステップ1 切り抜き</h2>
+    </div>
+    <div class="step-progress">
+      <div class="dot on"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
+    </div>
+    <div class="editor-card">
+      <p style="color:var(--ink-soft);font-size:14px;margin-bottom:12px;">白いわくをドラッグして、見せたい部分を選ぼう</p>
+      <div class="canvas-stage" id="crop-stage">
+        <canvas id="crop-canvas" width="480" height="360"></canvas>
+        <div class="crop-overlay" id="crop-overlay">
+          <div class="crop-handle nw" data-handle="nw"></div>
+          <div class="crop-handle ne" data-handle="ne"></div>
+          <div class="crop-handle sw" data-handle="sw"></div>
+          <div class="crop-handle se" data-handle="se"></div>
+        </div>
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-ghost" id="crop-reset-btn">わくをリセット</button>
+        <button class="btn btn-primary" id="crop-apply-btn">この範囲で切り抜く</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ STEP 2: brightness ============ -->
+  <section id="view-brightness" class="view">
+    <div class="section-top">
+      <button class="back-btn" data-goto="view-crop">←</button>
+      <h2>ステップ2 明るさ</h2>
+    </div>
+    <div class="step-progress">
+      <div class="dot on"></div><div class="dot on"></div><div class="dot"></div><div class="dot"></div>
+    </div>
+    <div class="editor-card">
+      <div class="canvas-stage">
+        <canvas id="brightness-canvas" width="480" height="360"></canvas>
+      </div>
+      <div class="control-block">
+        <label for="brightness-slider">明るさ</label>
+        <input type="range" id="brightness-slider" min="40" max="180" value="100">
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-ghost" id="brightness-reset-btn">もとにもどす</button>
+        <button class="btn btn-primary" id="brightness-next-btn">つぎへ(文字入れ)</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ STEP 3: text ============ -->
+  <section id="view-text" class="view">
+    <div class="section-top">
+      <button class="back-btn" data-goto="view-brightness">←</button>
+      <h2>ステップ3 文字入れ</h2>
+    </div>
+    <div class="step-progress">
+      <div class="dot on"></div><div class="dot on"></div><div class="dot on"></div><div class="dot"></div>
+    </div>
+    <div class="editor-card">
+      <div class="canvas-stage">
+        <canvas id="text-canvas" width="480" height="360"></canvas>
+      </div>
+      <div class="control-block">
+        <label for="text-input">入れる言葉</label>
+        <input type="text" id="text-input" maxlength="20" placeholder="例:熱く盛り上がろう!">
+      </div>
+      <div class="control-block">
+        <label>文字の色</label>
+        <div class="swatch-row" id="color-swatches"></div>
+      </div>
+      <div class="control-block">
+        <label>文字の位置</label>
+        <div class="preset-row" id="position-presets"></div>
+      </div>
+      <div class="control-block">
+        <label>文字の大きさ</label>
+        <div class="preset-row" id="size-presets"></div>
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-ghost" id="text-reset-btn">文字をけす</button>
+        <button class="btn btn-primary" id="text-next-btn">できあがりを見る</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ STEP 4: compare & download ============ -->
+  <section id="view-result" class="view">
+    <div class="section-top">
+      <button class="back-btn" data-goto="view-text">←</button>
+      <h2>できあがり</h2>
+    </div>
+    <div class="editor-card">
+      <div class="compare-row">
+        <div class="compare-col">
+          <canvas id="result-before-canvas" width="480" height="360"></canvas>
+          <div class="cap">加工前</div>
+        </div>
+        <div class="compare-col">
+          <canvas id="result-after-canvas" width="480" height="360"></canvas>
+          <div class="cap">加工後</div>
+        </div>
+      </div>
+      <p class="hint">加工前と加工後で、印象はどう変わったかな?ワークシートに書き出してみよう。</p>
+      <div class="btn-row">
+        <button class="btn btn-ghost" data-goto="view-select">べつの写真をえらぶ</button>
+        <button class="btn btn-sun" id="download-btn">画像を保存する</button>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<script>
+/* ------------------------------------------------------------------
+   写真の管理
+   本番では、この PHOTO_SOURCES の draw 関数を、実際の写真ファイルの
+   読み込み処理(image.src = "実写真のURL"; drawImage(...))に差し替えれば
+   良い。仮画像はすべてイラストで、canvas に直接描画している。
+------------------------------------------------------------------- */
+const W = 800, H = 600;
+
+function bgFill(ctx, color){
+  ctx.fillStyle = color;
+  ctx.fillRect(0,0,W,H);
+}
+function person(ctx, x, y, scale, skin, shirt){
+  ctx.save();
+  ctx.translate(x,y);
+  ctx.scale(scale,scale);
+  ctx.fillStyle = shirt;
+  ctx.beginPath();
+  ctx.moveTo(-30,20); ctx.lineTo(-24,-30); ctx.lineTo(24,-30); ctx.lineTo(30,20);
+  ctx.closePath(); ctx.fill();
+  ctx.fillStyle = skin;
+  ctx.beginPath(); ctx.arc(0,-52,22,0,Math.PI*2); ctx.fill();
+  ctx.restore();
+}
+
+const PHOTO_SOURCES = {
+  basketball:{label:"バスケットボール部", group:"sports", draw:(ctx)=>{
+    bgFill(ctx,"#E9C88A");
+    ctx.fillStyle="#C99A4C"; for(let i=0;i<8;i++){ctx.fillRect(i*100,0,2,H);}
+    ctx.strokeStyle="#fff"; ctx.lineWidth=6; ctx.beginPath(); ctx.arc(400,300,120,0,Math.PI*2); ctx.stroke();
+    ctx.fillStyle="#3B2A1A"; ctx.fillRect(560,120,10,140);
+    ctx.strokeStyle="#3B2A1A"; ctx.lineWidth=4; ctx.strokeRect(590,140,70,50);
+    ctx.strokeStyle="#E24B4A"; ctx.lineWidth=5; ctx.beginPath(); ctx.arc(625,190,26,0,Math.PI*2); ctx.stroke();
+    person(ctx,380,420,2.6,"#E8B98A","#D85A30");
+    person(ctx,520,440,2.2,"#C98A5C","#185FA5");
+  }},
+  soccer:{label:"サッカー部", group:"sports", draw:(ctx)=>{
+    bgFill(ctx,"#8FC15C");
+    ctx.strokeStyle="rgba(255,255,255,.8)"; ctx.lineWidth=6;
+    ctx.strokeRect(60,60,W-120,H-120);
+    ctx.beginPath(); ctx.arc(400,300,80,0,Math.PI*2); ctx.stroke();
+    ctx.strokeRect(60,220,90,160);
+    ctx.fillStyle="#fff"; ctx.beginPath(); ctx.arc(500,380,26,0,Math.PI*2); ctx.fill();
+    ctx.strokeStyle="#333"; ctx.lineWidth=2; ctx.stroke();
+    person(ctx,470,300,2.6,"#E8B98A","#3B6D11");
+    person(ctx,300,340,2.2,"#C98A5C","#0C447C");
+  }},
+  tabletennis:{label:"卓球部", group:"sports", draw:(ctx)=>{
+    bgFill(ctx,"#DCEFF6");
+    ctx.fillStyle="#185FA5"; ctx.fillRect(180,260,440,180);
+    ctx.strokeStyle="#fff"; ctx.lineWidth=6; ctx.strokeRect(180,260,440,180);
+    ctx.beginPath(); ctx.moveTo(400,260); ctx.lineTo(400,440); ctx.stroke();
+    ctx.fillStyle="#222"; ctx.fillRect(395,230,10,40);
+    person(ctx,300,220,2.0,"#E8B98A","#993556");
+    person(ctx,500,220,2.0,"#C98A5C","#0F6E56");
+  }},
+  art:{label:"美術部", group:"culture", draw:(ctx)=>{
+    bgFill(ctx,"#F3ECE0");
+    ctx.strokeStyle="#8A6A4A"; ctx.lineWidth=8;
+    ctx.beginPath(); ctx.moveTo(300,520); ctx.lineTo(400,180); ctx.lineTo(500,520); ctx.stroke();
+    ctx.fillStyle="#fff"; ctx.fillRect(310,220,180,240);
+    ctx.strokeStyle="#B4B2A9"; ctx.lineWidth=3; ctx.strokeRect(310,220,180,240);
+    ctx.fillStyle="#639922"; ctx.beginPath(); ctx.ellipse(360,320,30,20,0.3,0,Math.PI*2); ctx.fill();
+    ctx.fillStyle="#D85A30"; ctx.beginPath(); ctx.ellipse(420,360,26,18,-0.3,0,Math.PI*2); ctx.fill();
+    person(ctx,560,420,2.2,"#E8B98A","#7F77DD");
+  }},
+  brass:{label:"吹奏楽部", group:"culture", draw:(ctx)=>{
+    bgFill(ctx,"#EFE7F5");
+    ctx.fillStyle="#5F5E5A"; ctx.fillRect(360,300,20,220);
+    ctx.fillStyle="#B4B2A9"; ctx.beginPath(); ctx.moveTo(300,300); ctx.lineTo(460,300); ctx.lineTo(430,180); ctx.lineTo(330,180); ctx.closePath(); ctx.fill();
+    ctx.fillStyle="#FAC775";
+    ctx.beginPath(); ctx.moveTo(150,380); ctx.lineTo(280,360); ctx.lineTo(300,400); ctx.lineTo(170,420); ctx.closePath(); ctx.fill();
+    ctx.beginPath(); ctx.arc(300,400,22,0,Math.PI*2); ctx.fill();
+    person(ctx,220,300,2.0,"#E8B98A","#993C1D");
+  }},
+  tea:{label:"茶道部", group:"culture", draw:(ctx)=>{
+    bgFill(ctx,"#EFEAD8");
+    ctx.strokeStyle="#C9BB8E"; ctx.lineWidth=2;
+    for(let i=0;i<6;i++){ctx.strokeRect(80+i*110,80,110,440);}
+    ctx.fillStyle="#4A6B4A"; ctx.beginPath(); ctx.ellipse(400,380,70,36,0,0,Math.PI*2); ctx.fill();
+    ctx.strokeStyle="#2E4A2E"; ctx.lineWidth=4; ctx.beginPath(); ctx.ellipse(400,380,70,36,0,0,Math.PI*2); ctx.stroke();
+    person(ctx,560,340,1.9,"#E8B98A","#4A1B0C");
+  }},
+  sportsclub:{label:"スポーツクラブ", group:"elementary", draw:(ctx)=>{
+    bgFill(ctx,"#D9EEDD");
+    ctx.fillStyle="#fff"; ctx.beginPath(); ctx.arc(420,300,50,0,Math.PI*2); ctx.fill();
+    ctx.strokeStyle="#333"; ctx.lineWidth=3; ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(370,300); ctx.lineTo(470,300); ctx.moveTo(420,250); ctx.lineTo(420,350); ctx.stroke();
+    person(ctx,250,400,2.0,"#E8B98A","#639922");
+    person(ctx,570,420,1.8,"#C98A5C","#F0997B");
+  }},
+  scienceclub:{label:"科学クラブ", group:"elementary", draw:(ctx)=>{
+    bgFill(ctx,"#E6F1FB");
+    ctx.strokeStyle="#185FA5"; ctx.lineWidth=5;
+    ctx.beginPath(); ctx.moveTo(380,200); ctx.lineTo(380,300); ctx.lineTo(320,440); ctx.lineTo(480,440); ctx.lineTo(420,300); ctx.lineTo(420,200); ctx.stroke();
+    ctx.fillStyle="#85B7EB"; ctx.beginPath(); ctx.moveTo(340,340); ctx.lineTo(460,340); ctx.lineTo(480,436); ctx.lineTo(320,436); ctx.closePath(); ctx.fill();
+    person(ctx,570,400,2.0,"#E8B98A","#0F6E56");
+  }},
+  library:{label:"図書委員会", group:"elementary", draw:(ctx)=>{
+    bgFill(ctx,"#F5EFE0");
+    const cols=["#D85A30","#185FA5","#639922","#993556","#854F0B"];
+    cols.forEach((c,i)=>{ctx.fillStyle=c; ctx.fillRect(220+i*70,260,56,220);});
+    ctx.fillStyle="#8A6A4A"; ctx.fillRect(200,480,420,20);
+    person(ctx,600,380,2.0,"#C98A5C","#3C3489");
+  }},
+  broadcast:{label:"放送委員会", group:"elementary", draw:(ctx)=>{
+    bgFill(ctx,"#F5E9EE");
+    ctx.fillStyle="#5F5E5A"; ctx.fillRect(390,300,20,160);
+    ctx.fillStyle="#993556"; ctx.beginPath(); ctx.ellipse(400,270,34,50,0,0,Math.PI*2); ctx.fill();
+    ctx.strokeStyle="#5F5E5A"; ctx.lineWidth=4; ctx.beginPath(); ctx.arc(400,290,50,0.2*Math.PI,0.8*Math.PI); ctx.stroke();
+    person(ctx,570,360,2.0,"#E8B98A","#D4537E");
+  }}
+};
+
+function getSourceCanvas(key){
+  const c = document.createElement("canvas");
+  c.width = W; c.height = H;
+  const ctx = c.getContext("2d");
+  PHOTO_SOURCES[key].draw(ctx);
+  return c;
+}
+
+/* ------------------------------------------------------------------ */
+
+const groupTitles = {sports:"grid-sports", culture:"grid-culture", elementary:"grid-elementary"};
+Object.keys(groupTitles).forEach(g=>{
+  const grid = document.getElementById(groupTitles[g]);
+  Object.keys(PHOTO_SOURCES).filter(k=>PHOTO_SOURCES[k].group===g).forEach(key=>{
+    const card = document.createElement("div");
+    card.className = "photo-card";
+    const cv = document.createElement("canvas");
+    cv.width = 160; cv.height = 120;
+    card.appendChild(cv);
+    const name = document.createElement("div");
+    name.className = "name";
+    name.textContent = PHOTO_SOURCES[key].label;
+    card.appendChild(name);
+    grid.appendChild(card);
+    const ctx = cv.getContext("2d");
+    ctx.drawImage(getSourceCanvas(key), 0, 0, 160, 120);
+    card.addEventListener("click", ()=> selectPhoto(key));
+  });
+});
+
+/* ------------------------------------------------------------------
+   状態管理
+------------------------------------------------------------------- */
+let session = {
+  key:null,
+  intent:null,
+  originalCanvas:null,
+  workingCanvas:null,
+  brightnessValue:100,
+  textConfig:null
+};
+
+function showView(id){
+  document.querySelectorAll(".view").forEach(v=>v.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+  window.scrollTo({top:0, behavior:"instant"});
+}
+document.querySelectorAll("[data-goto]").forEach(el=>{
+  el.addEventListener("click", ()=> showView(el.getAttribute("data-goto")));
+});
+
+function selectPhoto(key){
+  session.key = key;
+  session.originalCanvas = getSourceCanvas(key);
+  session.workingCanvas = document.createElement("canvas");
+  session.workingCanvas.width = W; session.workingCanvas.height = H;
+  session.workingCanvas.getContext("2d").drawImage(session.originalCanvas,0,0);
+  session.brightnessValue = 100;
+  session.textConfig = null;
+  document.getElementById("intent-title").textContent = PHOTO_SOURCES[key].label + " のポスターをつくろう";
+  showView("view-intent");
+}
+
+/* ---------------- intent ---------------- */
+const intents = ["元気","静か","真剣","楽しい","かっこいい"];
+const intentRow = document.getElementById("intent-row");
+intents.forEach(t=>{
+  const b = document.createElement("button");
+  b.className = "intent-btn";
+  b.textContent = t;
+  b.addEventListener("click", ()=>{
+    document.querySelectorAll(".intent-btn").forEach(x=>x.classList.remove("selected"));
+    b.classList.add("selected");
+    session.intent = t;
+  });
+  intentRow.appendChild(b);
+});
+document.getElementById("intent-next-btn").addEventListener("click", ()=>{
+  showView("view-crop");
+  initCropStage();
+});
+
+/* ---------------- STEP1: crop ---------------- */
+const cropCanvas = document.getElementById("crop-canvas");
+const cropCtx = cropCanvas.getContext("2d");
+const cropOverlay = document.getElementById("crop-overlay");
+const cropStage = document.getElementById("crop-stage");
+let cropRect = {x:60,y:45,w:360,h:270};
+
+function initCropStage(){
+  cropCtx.clearRect(0,0,W,H);
+  cropCtx.drawImage(session.workingCanvas,0,0,W,H,0,0,480,360);
+  cropRect = {x:60,y:45,w:360,h:270};
+  renderCropOverlay();
+}
+function renderCropOverlay(){
+  cropOverlay.style.left = cropRect.x+"px";
+  cropOverlay.style.top = cropRect.y+"px";
+  cropOverlay.style.width = cropRect.w+"px";
+  cropOverlay.style.height = cropRect.h+"px";
+}
+document.getElementById("crop-reset-btn").addEventListener("click", ()=>{
+  cropRect = {x:60,y:45,w:360,h:270};
+  renderCropOverlay();
+});
+
+let dragMode=null, dragStart=null, rectStart=null;
+function stagePos(evt){
+  const r = cropStage.getBoundingClientRect();
+  const scaleX = 480/r.width, scaleY = 360/r.height;
+  const clientX = evt.touches ? evt.touches[0].clientX : evt.clientX;
+  const clientY = evt.touches ? evt.touches[0].clientY : evt.clientY;
+  return {x:(clientX-r.left)*scaleX, y:(clientY-r.top)*scaleY};
+}
+cropOverlay.addEventListener("mousedown", startDrag);
+cropOverlay.addEventListener("touchstart", startDrag, {passive:true});
+function startDrag(evt){
+  const handle = evt.target.getAttribute && evt.target.getAttribute("data-handle");
+  dragMode = handle || "move";
+  dragStart = stagePos(evt);
+  rectStart = Object.assign({}, cropRect);
+  evt.stopPropagation();
+}
+window.addEventListener("mousemove", onDrag);
+window.addEventListener("touchmove", onDrag, {passive:true});
+window.addEventListener("mouseup", ()=>{dragMode=null;});
+window.addEventListener("touchend", ()=>{dragMode=null;});
+function onDrag(evt){
+  if(!dragMode) return;
+  const pos = stagePos(evt);
+  const dx = pos.x - dragStart.x, dy = pos.y - dragStart.y;
+  let r = Object.assign({}, rectStart);
+  if(dragMode==="move"){
+    r.x = clamp(rectStart.x+dx, 0, 480-rectStart.w);
+    r.y = clamp(rectStart.y+dy, 0, 360-rectStart.h);
+  } else if(dragMode==="se"){
+    r.w = clamp(rectStart.w+dx, 40, 480-rectStart.x);
+    r.h = clamp(rectStart.h+dy, 40, 360-rectStart.y);
+  } else if(dragMode==="nw"){
+    const newX = clamp(rectStart.x+dx, 0, rectStart.x+rectStart.w-40);
+    const newY = clamp(rectStart.y+dy, 0, rectStart.y+rectStart.h-40);
+    r.w = rectStart.w + (rectStart.x-newX);
+    r.h = rectStart.h + (rectStart.y-newY);
+    r.x = newX; r.y = newY;
+  } else if(dragMode==="ne"){
+    const newY = clamp(rectStart.y+dy, 0, rectStart.y+rectStart.h-40);
+    r.w = clamp(rectStart.w+dx, 40, 480-rectStart.x);
+    r.h = rectStart.h + (rectStart.y-newY);
+    r.y = newY;
+  } else if(dragMode==="sw"){
+    const newX = clamp(rectStart.x+dx, 0, rectStart.x+rectStart.w-40);
+    r.w = rectStart.w + (rectStart.x-newX);
+    r.h = clamp(rectStart.h+dy, 40, 360-rectStart.y);
+    r.x = newX;
+  }
+  cropRect = r;
+  renderCropOverlay();
+}
+function clamp(v,min,max){return Math.max(min,Math.min(max,v));}
+
+document.getElementById("crop-apply-btn").addEventListener("click", ()=>{
+  const scale = W/480;
+  const sx = cropRect.x*scale, sy = cropRect.y*scale, sw = cropRect.w*scale, sh = cropRect.h*scale;
+  const cropped = document.createElement("canvas");
+  cropped.width = W; cropped.height = H;
+  cropped.getContext("2d").drawImage(session.workingCanvas, sx, sy, sw, sh, 0, 0, W, H);
+  session.workingCanvas = cropped;
+  showView("view-brightness");
+  initBrightnessStage();
+});
+
+/* ---------------- STEP2: brightness ---------------- */
+const brightCanvas = document.getElementById("brightness-canvas");
+const brightCtx = brightCanvas.getContext("2d");
+const brightSlider = document.getElementById("brightness-slider");
+
+function initBrightnessStage(){
+  brightSlider.value = 100;
+  session.brightnessValue = 100;
+  renderBrightness();
+}
+function renderBrightness(){
+  brightCtx.clearRect(0,0,480,360);
+  brightCtx.filter = "brightness(" + session.brightnessValue + "%)";
+  brightCtx.drawImage(session.workingCanvas,0,0,W,H,0,0,480,360);
+  brightCtx.filter = "none";
+}
+brightSlider.addEventListener("input", ()=>{
+  session.brightnessValue = parseInt(brightSlider.value,10);
+  renderBrightness();
+});
+document.getElementById("brightness-reset-btn").addEventListener("click", ()=>{
+  brightSlider.value = 100;
+  session.brightnessValue = 100;
+  renderBrightness();
+});
+document.getElementById("brightness-next-btn").addEventListener("click", ()=>{
+  const baked = document.createElement("canvas");
+  baked.width = W; baked.height = H;
+  const bctx = baked.getContext("2d");
+  bctx.filter = "brightness(" + session.brightnessValue + "%)";
+  bctx.drawImage(session.workingCanvas,0,0);
+  bctx.filter = "none";
+  session.workingCanvas = baked;
+  showView("view-text");
+  initTextStage();
+});
+
+/* ---------------- STEP3: text ---------------- */
+const textCanvas = document.getElementById("text-canvas");
+const textCtx = textCanvas.getContext("2d");
+const textInput = document.getElementById("text-input");
+const colorSwatchesEl = document.getElementById("color-swatches");
+const positionPresetsEl = document.getElementById("position-presets");
+const sizePresetsEl = document.getElementById("size-presets");
+
+const TEXT_COLORS = ["#FFFFFF","#F2984E","#E4636F","#4C9A6A","#1F5C79","#22303F"];
+const POSITIONS = [{key:"top",label:"上"},{key:"middle",label:"まん中"},{key:"bottom",label:"下"}];
+const SIZES = [{key:"small",label:"小",px:34},{key:"medium",label:"中",px:50},{key:"large",label:"大",px:68}];
+
+TEXT_COLORS.forEach((c,i)=>{
+  const sw = document.createElement("div");
+  sw.className = "swatch" + (i===0?" selected":"");
+  sw.style.background = c;
+  sw.addEventListener("click", ()=>{
+    document.querySelectorAll(".swatch").forEach(s=>s.classList.remove("selected"));
+    sw.classList.add("selected");
+    textState.color = c;
+    renderText();
+  });
+  colorSwatchesEl.appendChild(sw);
+});
+POSITIONS.forEach((p,i)=>{
+  const b = document.createElement("button");
+  b.className = "preset-btn" + (i===2?" selected":"");
+  b.textContent = p.label;
+  b.addEventListener("click", ()=>{
+    document.querySelectorAll("#position-presets .preset-btn").forEach(x=>x.classList.remove("selected"));
+    b.classList.add("selected");
+    textState.position = p.key;
+    renderText();
+  });
+  positionPresetsEl.appendChild(b);
+});
+SIZES.forEach((s,i)=>{
+  const b = document.createElement("button");
+  b.className = "preset-btn" + (i===1?" selected":"");
+  b.textContent = s.label;
+  b.addEventListener("click", ()=>{
+    document.querySelectorAll("#size-presets .preset-btn").forEach(x=>x.classList.remove("selected"));
+    b.classList.add("selected");
+    textState.size = s.px;
+    renderText();
+  });
+  sizePresetsEl.appendChild(b);
+});
+
+let textState = {color:TEXT_COLORS[0], position:"bottom", size:50};
+
+function initTextStage(){
+  textInput.value = "";
+  textState = {color:TEXT_COLORS[0], position:"bottom", size:50};
+  document.querySelectorAll(".swatch").forEach((s,i)=>s.classList.toggle("selected", i===0));
+  document.querySelectorAll("#position-presets .preset-btn").forEach((b,i)=>b.classList.toggle("selected", i===2));
+  document.querySelectorAll("#size-presets .preset-btn").forEach((b,i)=>b.classList.toggle("selected", i===1));
+  renderText();
+}
+function renderText(){
+  textCtx.clearRect(0,0,480,360);
+  textCtx.drawImage(session.workingCanvas,0,0,W,H,0,0,480,360);
+  const text = textInput.value.trim();
+  if(text.length>0){
+    const scale = 480/W;
+    const fontPx = textState.size*scale;
+    textCtx.font = "900 "+fontPx+"px 'Zen Maru Gothic', sans-serif";
+    textCtx.textAlign = "center";
+    let y;
+    if(textState.position==="top") y = fontPx+20;
+    else if(textState.position==="middle") y = 180+fontPx/3;
+    else y = 360-24;
+    textCtx.lineWidth = fontPx*0.18;
+    textCtx.strokeStyle = "rgba(0,0,0,0.55)";
+    textCtx.strokeText(text, 240, y);
+    textCtx.fillStyle = textState.color;
+    textCtx.fillText(text, 240, y);
+  }
+}
+textInput.addEventListener("input", renderText);
+document.getElementById("text-reset-btn").addEventListener("click", ()=>{
+  textInput.value = "";
+  renderText();
+});
+document.getElementById("text-next-btn").addEventListener("click", ()=>{
+  session.textConfig = {text:textInput.value.trim(), color:textState.color, position:textState.position, size:textState.size};
+  showView("view-result");
+  renderResult();
+});
+
+/* ---------------- STEP4: result ---------------- */
+const resultBeforeCanvas = document.getElementById("result-before-canvas");
+const resultAfterCanvas = document.getElementById("result-after-canvas");
+
+function renderResult(){
+  const beforeCtx = resultBeforeCanvas.getContext("2d");
+  beforeCtx.clearRect(0,0,480,360);
+  beforeCtx.drawImage(session.originalCanvas,0,0,W,H,0,0,480,360);
+
+  const afterCtx = resultAfterCanvas.getContext("2d");
+  afterCtx.clearRect(0,0,480,360);
+  afterCtx.drawImage(session.workingCanvas,0,0,W,H,0,0,480,360);
+  const text = session.textConfig ? session.textConfig.text : "";
+  if(text && text.length>0){
+    const scale = 480/W;
+    const fontPx = session.textConfig.size*scale;
+    afterCtx.font = "900 "+fontPx+"px 'Zen Maru Gothic', sans-serif";
+    afterCtx.textAlign = "center";
+    let y;
+    if(session.textConfig.position==="top") y = fontPx+20;
+    else if(session.textConfig.position==="middle") y = 180+fontPx/3;
+    else y = 360-24;
+    afterCtx.lineWidth = fontPx*0.18;
+    afterCtx.strokeStyle = "rgba(0,0,0,0.55)";
+    afterCtx.strokeText(text, 240, y);
+    afterCtx.fillStyle = session.textConfig.color;
+    afterCtx.fillText(text, 240, y);
+  }
+}
+
+document.getElementById("download-btn").addEventListener("click", ()=>{
+  const full = document.createElement("canvas");
+  full.width = W; full.height = H;
+  const fctx = full.getContext("2d");
+  fctx.drawImage(session.workingCanvas,0,0);
+  const text = session.textConfig ? session.textConfig.text : "";
+  if(text && text.length>0){
+    const fontPx = session.textConfig.size;
+    fctx.font = "900 "+fontPx+"px 'Zen Maru Gothic', sans-serif";
+    fctx.textAlign = "center";
+    let y;
+    if(session.textConfig.position==="top") y = fontPx+30;
+    else if(session.textConfig.position==="middle") y = 300+fontPx/3;
+    else y = 600-40;
+    fctx.lineWidth = fontPx*0.18;
+    fctx.strokeStyle = "rgba(0,0,0,0.55)";
+    fctx.strokeText(text, 400, y);
+    fctx.fillStyle = session.textConfig.color;
+    fctx.fillText(text, 400, y);
+  }
+  const link = document.createElement("a");
+  link.download = "poster_" + session.key + ".png";
+  link.href = full.toDataURL("image/png");
+  link.click();
+});
+</script>
+</body>
+</html>
